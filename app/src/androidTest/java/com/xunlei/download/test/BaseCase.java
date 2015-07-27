@@ -37,7 +37,8 @@ public class BaseCase extends ApplicationTestCase<MyApplication> {
     public void tearDown() throws Exception {
         super.tearDown();
         //删除用例中建立的下载任务
-        Cursor cursor = downloadManager.query(new Query());
+        Query query = new Query();
+        Cursor cursor = downloadManager.query(query);
         if (cursor.getCount() > 0) {
             for (int i = 0; i < cursor.getCount(); i++) {
                 cursor.moveToNext();
