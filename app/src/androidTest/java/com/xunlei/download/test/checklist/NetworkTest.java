@@ -210,7 +210,7 @@ public class NetworkTest extends BaseCase {
         int status3G = CaseUtils.selectDownloadStatus(downloadManager, id);
         assertEquals("3G下载状态异常", 4, status3G);
         int reason = CaseUtils.selectReason(downloadManager, id);
-        assertEquals("3G下载原因异常", 2, reason);
+        assertEquals("3G下载原因异常", 3, reason);
         int speed3G = CaseUtils.selectDownloadSpeed(downloadManager, id);
         assertTrue("3G下载速度异常", speed3G == 0);
         sleep(1);
