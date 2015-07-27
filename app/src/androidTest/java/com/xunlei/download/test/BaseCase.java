@@ -46,6 +46,7 @@ public class BaseCase extends ApplicationTestCase<MyApplication> {
                 downloadManager.remove(id);
             }
         }
+        cursor.close();
         sleep(1);
     }
 
