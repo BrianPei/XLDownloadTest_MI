@@ -18,7 +18,7 @@ import jxl.read.biff.BiffException;
  * 读取Excel文件
  */
 public class ExcelReader {
-    private final String excelName = "Market1000.xls";
+    private final String excelName = "";
 
     public Workbook _wb;
     public Sheet _sheet;
@@ -71,7 +71,7 @@ public class ExcelReader {
      * @return
      */
     public int getUrlNum() {
-        return _sheet.getRows() - 1;
+        return _sheet.getRows();
     }
 
     /**
