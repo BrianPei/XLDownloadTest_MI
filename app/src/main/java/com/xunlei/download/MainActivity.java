@@ -17,6 +17,8 @@ import com.xunlei.download.test.R;
 import com.xunlei.download.utils.CaseUtils;
 import com.xunlei.download.utils.LogUtil.DebugLog;
 import com.xunlei.download.utils.dao.DaoSession;
+import com.xunlei.download.utils.dao.FTP;
+import com.xunlei.download.utils.dao.FTPDao;
 import com.xunlei.download.utils.dao.HTTP;
 import com.xunlei.download.utils.dao.HTTPDao;
 import com.xunlei.download.utils.dao.HTTPS;
@@ -40,7 +42,7 @@ public class MainActivity extends Activity {
 
     TextView textView;
     RadioGroup radioGroup;
-    RadioButton radio1, radio2, radio3, radio4, radio5;
+    RadioButton radio1, radio2, radio3, radio4, radio5, radio6;
     Button button;
 
     @Override
@@ -56,6 +58,7 @@ public class MainActivity extends Activity {
         radio3 = (RadioButton) findViewById(R.id.radioButton3);
         radio4 = (RadioButton) findViewById(R.id.radioButton4);
         radio5 = (RadioButton) findViewById(R.id.radioButton5);
+        radio6 = (RadioButton) findViewById(R.id.radioButton6);
         button = (Button) findViewById(R.id.button);
 
         final DaoSession session = UrlDaoUtils.getDaoSession(this);
@@ -71,6 +74,8 @@ public class MainActivity extends Activity {
                     table = "magnet";
                 } else if (checkedId == radio4.getId()) {
                     table = "https";
+                } else if (checkedId == radio5.getId()) {
+                    table = "ftp";
                 } else {
                     table = "testurl";
                 }
@@ -100,6 +105,10 @@ public class MainActivity extends Activity {
                         case "https":
                             HTTPSDao httpsDao = session.getHTTPSDao();
                             insertHttpsUrl(httpsDao, num);
+                            break;
+                        case "ftp":
+                            FTPDao ftpDao = session.getFTPDao();
+                            insertFtpUrl(ftpDao, num);
                             break;
                         default:
                             TESTURLDao testurlDao = session.getTESTURLDao();
@@ -239,6 +248,36 @@ public class MainActivity extends Activity {
             List<HTTPS> httpsList = httpsDao.queryBuilder().where(HTTPSDao.Properties.ID.eq(id)).build().forCurrentThread().list();
             HTTPS https = httpsList.get(0);
             String url = https.getURL();
+            excute(url);
+            //将获取到的随机id与数组最后一位交换，作为去重
+            int temp = ids[index];
+            ids[index] = ids[count];
+            ids[count] = temp;
+            count--;
+        }
+        showToast("执行成功，共插入" + num + "条Https下载任务");
+    }
+
+    public void insertFtpUrl(FTPDao ftpDao, int num) {
+        int[] ids = new int[num];
+        for (int n = 0; n < num; n++) {
+            ids[n] = n + 1;
+        }
+        int count = ids.length - 1;
+        for (int i = 0; i < num; i++) {
+            int index;
+            //获取随机脚标
+            if (count > 0) {
+                Random random = new Random();
+                index = random.nextInt(count) + 1;
+            } else {
+                index = 0;
+            }
+            int id = ids[index];
+            //获取对应url，添加下载任务
+            List<FTP> ftpList = ftpDao.queryBuilder().where(FTPDao.Properties.ID.eq(id)).build().forCurrentThread().list();
+            FTP ftp = ftpList.get(0);
+            String url = ftp.getURL();
             excute(url);
             //将获取到的随机id与数组最后一位交换，作为去重
             int temp = ids[index];

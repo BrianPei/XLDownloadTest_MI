@@ -8,7 +8,8 @@
     <string name="radioButton2">Http(16000)</string>
     <string name="radioButton3">Magnet(10048)</string>
     <string name="radioButton4">Https(1000)</string>
-    <string name="radioButton5">TestUrl(55)</string>
+    <string name="radioButton5">Ftp(414)</string>
+    <string name="radioButton6">TestUrl(55)</string>
     <string name="button">运行</string>
     <string name="placeHolder">请输入任务条数</string>
 

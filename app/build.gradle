@@ -31,4 +31,6 @@ android {
 
 dependencies {
     compile files('libs/jxl.jar')
+    compile files('libs/sqliteassethelper-2.0.1.jar')
+    compile files('libs/greendao-2.0.0.jar')
 }
