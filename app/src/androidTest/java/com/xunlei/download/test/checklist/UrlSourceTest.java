@@ -45,6 +45,7 @@ public class UrlSourceTest extends BaseCase {
         sleep(1);
     }
 
+    /*
     public void testMarket3() {
         printDivideLine();
         //创建下载任务
@@ -94,7 +95,7 @@ public class UrlSourceTest extends BaseCase {
         //验证下载结果
         CaseUtils.checkDownloadResult(downloadManager, id);
         sleep(1);
-    }
+    }*/
 
     public void testTheme1() {
         printDivideLine();
@@ -130,6 +131,7 @@ public class UrlSourceTest extends BaseCase {
         sleep(1);
     }
 
+    /*
     public void testTheme3() {
         printDivideLine();
         //创建下载任务
@@ -179,7 +181,7 @@ public class UrlSourceTest extends BaseCase {
         //验证下载结果
         CaseUtils.checkDownloadResult(downloadManager, id);
         sleep(1);
-    }
+    }*/
 
     public void testVideo1() {
         printDivideLine();
@@ -215,6 +217,7 @@ public class UrlSourceTest extends BaseCase {
         sleep(1);
     }
 
+    /*
     public void testVideo3() {
         printDivideLine();
         //创建下载任务
@@ -264,7 +267,7 @@ public class UrlSourceTest extends BaseCase {
         //验证下载结果
         CaseUtils.checkDownloadResult(downloadManager, id);
         sleep(1);
-    }
+    }*/
 
     public void testRadio1() {
         printDivideLine();
@@ -300,6 +303,7 @@ public class UrlSourceTest extends BaseCase {
         sleep(1);
     }
 
+    /*
     public void testRadio3() {
         printDivideLine();
         //创建下载任务
@@ -349,7 +353,7 @@ public class UrlSourceTest extends BaseCase {
         //验证下载结果
         CaseUtils.checkDownloadResult(downloadManager, id);
         sleep(1);
-    }
+    }*/
 
     /*
     public void testMusic1() {
@@ -486,6 +490,7 @@ public class UrlSourceTest extends BaseCase {
         sleep(1);
     }
 
+    /*
     public void testBrowser4() {
         printDivideLine();
         //创建下载任务
@@ -518,7 +523,7 @@ public class UrlSourceTest extends BaseCase {
         //验证下载结果
         CaseUtils.checkDownloadResult(downloadManager, id);
         sleep(1);
-    }
+    }*/
 
     public void testMarketUpdate1(){
         printDivideLine();
@@ -537,6 +542,7 @@ public class UrlSourceTest extends BaseCase {
         sleep(1);
     }
 
+    /*
     public void testMarketUpdate2(){
         printDivideLine();
         //创建下载任务
@@ -569,5 +575,5 @@ public class UrlSourceTest extends BaseCase {
         //验证下载结果
         CaseUtils.checkDownloadResult(downloadManager, id);
         sleep(1);
-    }
+    }*/
 }
