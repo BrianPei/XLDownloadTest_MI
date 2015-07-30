@@ -1,6 +1,8 @@
 package com.xunlei.download.test.checklist;
 
+import android.app.DownloadManager;
 import android.database.Cursor;
+import android.net.Uri;
 
 import com.xunlei.download.test.BaseCase;
 import com.xunlei.download.utils.CaseUtils;

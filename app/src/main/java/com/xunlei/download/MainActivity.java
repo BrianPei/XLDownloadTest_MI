@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.xunlei.download.test.R;
 import com.xunlei.download.utils.CaseUtils;
 import com.xunlei.download.utils.LogUtil.DebugLog;
+import com.xunlei.download.utils.dao.AD;
+import com.xunlei.download.utils.dao.ADDao;
 import com.xunlei.download.utils.dao.DaoSession;
 import com.xunlei.download.utils.dao.FTP;
 import com.xunlei.download.utils.dao.FTPDao;
@@ -38,11 +40,10 @@ import java.util.Random;
 public class MainActivity extends Activity {
     private DownloadManager downloadManager;
     private String table;
-    private int num;
 
     TextView textView;
     RadioGroup radioGroup;
-    RadioButton radio1, radio2, radio3, radio4, radio5, radio6;
+    RadioButton radio1, radio2, radio3, radio4, radio5, radio6, radio7;
     Button button;
 
     @Override
@@ -59,6 +60,7 @@ public class MainActivity extends Activity {
         radio4 = (RadioButton) findViewById(R.id.radioButton4);
         radio5 = (RadioButton) findViewById(R.id.radioButton5);
         radio6 = (RadioButton) findViewById(R.id.radioButton6);
+        radio7 = (RadioButton) findViewById(R.id.radioButton7);
         button = (Button) findViewById(R.id.button);
 
         final DaoSession session = UrlDaoUtils.getDaoSession(this);
@@ -76,6 +78,8 @@ public class MainActivity extends Activity {
                     table = "https";
                 } else if (checkedId == radio5.getId()) {
                     table = "ftp";
+                } else if (checkedId == radio7.getId()) {
+                    table = "ad";
                 } else {
                     table = "testurl";
                 }
@@ -88,7 +92,7 @@ public class MainActivity extends Activity {
                 EditText editText = (EditText) findViewById(R.id.editText);
                 String text = editText.getText().toString();
                 if (table != null && text != null) {
-                    num = Integer.parseInt(text);
+                    int num = Integer.parseInt(text);
                     switch (table) {
                         case "market":
                             MARKETDao marketDao = session.getMARKETDao();
@@ -109,6 +113,10 @@ public class MainActivity extends Activity {
                         case "ftp":
                             FTPDao ftpDao = session.getFTPDao();
                             insertFtpUrl(ftpDao, num);
+                            break;
+                        case "ad":
+                            ADDao adDao = session.getADDao();
+                            insertADUrl(adDao, num);
                             break;
                         default:
                             TESTURLDao testurlDao = session.getTESTURLDao();
@@ -134,6 +142,16 @@ public class MainActivity extends Activity {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(downloadUrl));
         String fileName = CaseUtils.getFileName(downloadUrl);
         request.setDestinationInExternalPublicDir("Download/download_test", fileName);
+        long id = downloadManager.enqueue(request);
+        DebugLog.d("TEST", "TASK ID = " + id);
+    }
+
+    public void excuteAD(String downloadUrl, String packageName) {
+        DebugLog.d("TEST", "URL = " + downloadUrl);
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(downloadUrl));
+        String fileName = CaseUtils.getFileName(downloadUrl);
+        request.setDestinationInExternalPublicDir("Download/download_test", fileName);
+        request.setApkPackageName(packageName);
         long id = downloadManager.enqueue(request);
         DebugLog.d("TEST", "TASK ID = " + id);
     }
@@ -309,6 +327,39 @@ public class MainActivity extends Activity {
             TESTURL testurl = testurlList.get(0);
             String url = testurl.getURL();
             excute(url);
+            //将获取到的随机id与数组最后一位交换，作为去重
+            int temp = ids[index];
+            ids[index] = ids[count];
+            ids[count] = temp;
+            count--;
+        }
+        showToast("执行成功，共插入" + num + "条Test下载任务");
+    }
+
+    public void insertADUrl(ADDao adDao, int num) {
+        int[] ids = new int[num];
+        for (int n = 0; n < num; n++) {
+            ids[n] = n + 1;
+        }
+        int count = ids.length - 1;
+        for (int i = 0; i < num; i++) {
+            int index;
+            //获取随机脚标
+            if (count > 0) {
+                Random random = new Random();
+                index = random.nextInt(count) + 1;
+            } else {
+                index = 0;
+            }
+            int id = ids[index];
+            //获取对应url，添加下载任务
+            List<AD> adList = adDao.queryBuilder().where(ADDao.Properties.ID.eq(id)).build().forCurrentThread().list();
+            AD ad = adList.get(0);
+            String url = ad.getURL();
+            DebugLog.d("TEST",url);
+            String apkName = ad.getAPKNAME();
+            DebugLog.d("TEST",apkName);
+            excuteAD(url, apkName);
             //将获取到的随机id与数组最后一位交换，作为去重
             int temp = ids[index];
             ids[index] = ids[count];
