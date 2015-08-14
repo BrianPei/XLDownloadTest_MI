@@ -46,11 +46,48 @@ public class MainActivity extends Activity {
     RadioButton radio1, radio2, radio3, radio4, radio5, radio6, radio7;
     Button button;
 
+    private int[] marketIds, httpIds, magnetIds, httpsIds, ftpIds, testurlIds, adIds;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+
+        marketIds = new int[1000];
+        for (int n = 0; n < 1000; n++) {
+            marketIds[n] = n + 1;
+        }
+
+        httpIds = new int[16000];
+        for (int n = 0; n < 16000; n++) {
+            httpIds[n] = n + 1;
+        }
+
+        magnetIds = new int[10048];
+        for (int n = 0; n < 10048; n++) {
+            magnetIds[n] = n + 1;
+        }
+
+        httpsIds = new int[1000];
+        for (int n = 0; n < 1000; n++) {
+            httpsIds[n] = n + 1;
+        }
+
+        ftpIds = new int[414];
+        for (int n = 0; n < 414; n++) {
+            ftpIds[n] = n + 1;
+        }
+
+        testurlIds = new int[55];
+        for (int n = 0; n < 55; n++) {
+            testurlIds[n] = n + 1;
+        }
+
+        adIds = new int[455];
+        for (int n = 0; n < 455; n++) {
+            adIds[n] = n + 1;
+        }
 
         textView = (TextView) findViewById(R.id.Title);
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
@@ -142,6 +179,7 @@ public class MainActivity extends Activity {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(downloadUrl));
         String fileName = CaseUtils.getFileName(downloadUrl);
         request.setDestinationInExternalPublicDir("Download/download_test", fileName);
+        request.setTitle(fileName);
         long id = downloadManager.enqueue(request);
         DebugLog.d("TEST", "TASK ID = " + id);
     }
@@ -151,17 +189,14 @@ public class MainActivity extends Activity {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(downloadUrl));
         String fileName = CaseUtils.getFileName(downloadUrl);
         request.setDestinationInExternalPublicDir("Download/download_test", fileName);
-        request.setApkPackageName(packageName);
+        request.setTitle(fileName);
+//        request.setApkPackageName(packageName);
         long id = downloadManager.enqueue(request);
         DebugLog.d("TEST", "TASK ID = " + id);
     }
 
     public void insertMarketUrl(MARKETDao marketDao, int num) {
-        int[] ids = new int[num];
-        for (int n = 0; n < num; n++) {
-            ids[n] = n + 1;
-        }
-        int count = ids.length - 1;
+        int count = marketIds.length - 1;
         for (int i = 0; i < num; i++) {
             int index;
             //获取随机脚标
@@ -171,27 +206,23 @@ public class MainActivity extends Activity {
             } else {
                 index = 0;
             }
-            int id = ids[index];
+            int id = marketIds[index];
             //获取对应url，添加下载任务
             List<MARKET> marketList = marketDao.queryBuilder().where(MARKETDao.Properties.ID.eq(id)).build().forCurrentThread().list();
             MARKET market = marketList.get(0);
             String url = market.getURL();
             excute(url);
             //将获取到的随机id与数组最后一位交换，作为去重
-            int temp = ids[index];
-            ids[index] = ids[count];
-            ids[count] = temp;
+            int temp = marketIds[index];
+            marketIds[index] = marketIds[count];
+            marketIds[count] = temp;
             count--;
         }
         showToast("执行成功，共插入" + num + "条Market下载任务");
     }
 
     public void insertHttpUrl(HTTPDao httpDao, int num) {
-        int[] ids = new int[num];
-        for (int n = 0; n < num; n++) {
-            ids[n] = n + 1;
-        }
-        int count = ids.length - 1;
+        int count = httpIds.length - 1;
         for (int i = 0; i < num; i++) {
             int index;
             //获取随机脚标
@@ -201,27 +232,23 @@ public class MainActivity extends Activity {
             } else {
                 index = 0;
             }
-            int id = ids[index];
+            int id = httpIds[index];
             //获取对应url，添加下载任务
             List<HTTP> httpList = httpDao.queryBuilder().where(HTTPDao.Properties.ID.eq(id)).build().forCurrentThread().list();
             HTTP http = httpList.get(0);
             String url = http.getURL();
             excute(url);
             //将获取到的随机id与数组最后一位交换，作为去重
-            int temp = ids[index];
-            ids[index] = ids[count];
-            ids[count] = temp;
+            int temp = httpIds[index];
+            httpIds[index] = httpIds[count];
+            httpIds[count] = temp;
             count--;
         }
         showToast("执行成功，共插入" + num + "条Http下载任务");
     }
 
     public void insertMagnetUrl(MAGNETDao magnetDao, int num) {
-        int[] ids = new int[num];
-        for (int n = 0; n < num; n++) {
-            ids[n] = n + 1;
-        }
-        int count = ids.length - 1;
+        int count = magnetIds.length - 1;
         for (int i = 0; i < num; i++) {
             int index;
             //获取随机脚标
@@ -231,27 +258,23 @@ public class MainActivity extends Activity {
             } else {
                 index = 0;
             }
-            int id = ids[index];
+            int id = magnetIds[index];
             //获取对应url，添加下载任务
             List<MAGNET> magnetList = magnetDao.queryBuilder().where(MAGNETDao.Properties.ID.eq(id)).build().forCurrentThread().list();
             MAGNET magnet = magnetList.get(0);
             String url = magnet.getURL();
             excute(url);
             //将获取到的随机id与数组最后一位交换，作为去重
-            int temp = ids[index];
-            ids[index] = ids[count];
-            ids[count] = temp;
+            int temp = magnetIds[index];
+            magnetIds[index] = magnetIds[count];
+            magnetIds[count] = temp;
             count--;
         }
         showToast("执行成功，共插入" + num + "条Magnet下载任务");
     }
 
     public void insertHttpsUrl(HTTPSDao httpsDao, int num) {
-        int[] ids = new int[num];
-        for (int n = 0; n < num; n++) {
-            ids[n] = n + 1;
-        }
-        int count = ids.length - 1;
+        int count = httpsIds.length - 1;
         for (int i = 0; i < num; i++) {
             int index;
             //获取随机脚标
@@ -261,27 +284,23 @@ public class MainActivity extends Activity {
             } else {
                 index = 0;
             }
-            int id = ids[index];
+            int id = httpsIds[index];
             //获取对应url，添加下载任务
             List<HTTPS> httpsList = httpsDao.queryBuilder().where(HTTPSDao.Properties.ID.eq(id)).build().forCurrentThread().list();
             HTTPS https = httpsList.get(0);
             String url = https.getURL();
             excute(url);
             //将获取到的随机id与数组最后一位交换，作为去重
-            int temp = ids[index];
-            ids[index] = ids[count];
-            ids[count] = temp;
+            int temp = httpsIds[index];
+            httpsIds[index] = httpsIds[count];
+            httpsIds[count] = temp;
             count--;
         }
         showToast("执行成功，共插入" + num + "条Https下载任务");
     }
 
     public void insertFtpUrl(FTPDao ftpDao, int num) {
-        int[] ids = new int[num];
-        for (int n = 0; n < num; n++) {
-            ids[n] = n + 1;
-        }
-        int count = ids.length - 1;
+        int count = ftpIds.length - 1;
         for (int i = 0; i < num; i++) {
             int index;
             //获取随机脚标
@@ -291,27 +310,23 @@ public class MainActivity extends Activity {
             } else {
                 index = 0;
             }
-            int id = ids[index];
+            int id = ftpIds[index];
             //获取对应url，添加下载任务
             List<FTP> ftpList = ftpDao.queryBuilder().where(FTPDao.Properties.ID.eq(id)).build().forCurrentThread().list();
             FTP ftp = ftpList.get(0);
             String url = ftp.getURL();
             excute(url);
             //将获取到的随机id与数组最后一位交换，作为去重
-            int temp = ids[index];
-            ids[index] = ids[count];
-            ids[count] = temp;
+            int temp = ftpIds[index];
+            ftpIds[index] = ftpIds[count];
+            ftpIds[count] = temp;
             count--;
         }
         showToast("执行成功，共插入" + num + "条Https下载任务");
     }
 
     public void insertTestUrl(TESTURLDao testurlDao, int num) {
-        int[] ids = new int[num];
-        for (int n = 0; n < num; n++) {
-            ids[n] = n + 1;
-        }
-        int count = ids.length - 1;
+        int count = testurlIds.length - 1;
         for (int i = 0; i < num; i++) {
             int index;
             //获取随机脚标
@@ -321,27 +336,23 @@ public class MainActivity extends Activity {
             } else {
                 index = 0;
             }
-            int id = ids[index];
+            int id = testurlIds[index];
             //获取对应url，添加下载任务
             List<TESTURL> testurlList = testurlDao.queryBuilder().where(TESTURLDao.Properties.ID.eq(id)).build().forCurrentThread().list();
             TESTURL testurl = testurlList.get(0);
             String url = testurl.getURL();
             excute(url);
             //将获取到的随机id与数组最后一位交换，作为去重
-            int temp = ids[index];
-            ids[index] = ids[count];
-            ids[count] = temp;
+            int temp = testurlIds[index];
+            testurlIds[index] = testurlIds[count];
+            testurlIds[count] = temp;
             count--;
         }
         showToast("执行成功，共插入" + num + "条Test下载任务");
     }
 
     public void insertADUrl(ADDao adDao, int num) {
-        int[] ids = new int[num];
-        for (int n = 0; n < num; n++) {
-            ids[n] = n + 1;
-        }
-        int count = ids.length - 1;
+        int count = adIds.length - 1;
         for (int i = 0; i < num; i++) {
             int index;
             //获取随机脚标
@@ -351,19 +362,19 @@ public class MainActivity extends Activity {
             } else {
                 index = 0;
             }
-            int id = ids[index];
+            int id = adIds[index];
             //获取对应url，添加下载任务
             List<AD> adList = adDao.queryBuilder().where(ADDao.Properties.ID.eq(id)).build().forCurrentThread().list();
             AD ad = adList.get(0);
             String url = ad.getURL();
-            DebugLog.d("TEST",url);
+            DebugLog.d("TEST", url);
             String apkName = ad.getAPKNAME();
-            DebugLog.d("TEST",apkName);
+            DebugLog.d("TEST", apkName);
             excuteAD(url, apkName);
             //将获取到的随机id与数组最后一位交换，作为去重
-            int temp = ids[index];
-            ids[index] = ids[count];
-            ids[count] = temp;
+            int temp = adIds[index];
+            adIds[index] = adIds[count];
+            adIds[count] = temp;
             count--;
         }
         showToast("执行成功，共插入" + num + "条Test下载任务");
