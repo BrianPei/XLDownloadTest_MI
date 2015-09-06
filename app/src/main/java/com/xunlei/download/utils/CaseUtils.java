@@ -397,6 +397,7 @@ public class CaseUtils {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setInstanceFollowRedirects(false);
             String realUrl = conn.getHeaderField("Location");
+            DebugLog.d("TEST", realUrl);
             fileName = getFileName(realUrl);
         } catch (MalformedURLException e) {
             e.printStackTrace();

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DownloadManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xunlei.download.test.R;
+import com.xunlei.download.utils.BTUtils.BTDownloadManager;
 import com.xunlei.download.utils.CaseUtils;
 import com.xunlei.download.utils.LogUtil.DebugLog;
 import com.xunlei.download.utils.dao.AD;
@@ -33,13 +35,17 @@ import com.xunlei.download.utils.dao.TESTURL;
 import com.xunlei.download.utils.dao.TESTURLDao;
 import com.xunlei.download.utils.dao.UrlDaoUtils;
 
+import java.io.File;
 import java.util.List;
 import java.util.Random;
 
 
 public class MainActivity extends Activity {
     private DownloadManager downloadManager;
+    private BTDownloadManager btDownloadManager;
     private String table;
+    public static String PATH = Environment.getExternalStoragePublicDirectory(
+            Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
 
     TextView textView;
     RadioGroup radioGroup;
@@ -53,6 +59,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+        btDownloadManager = BTDownloadManager.getInstance(this.getApplicationContext());
 
         marketIds = new int[1000];
         for (int n = 0; n < 1000; n++) {
@@ -182,6 +189,21 @@ public class MainActivity extends Activity {
         request.setTitle(fileName);
         long id = downloadManager.enqueue(request);
         DebugLog.d("TEST", "TASK ID = " + id);
+
+    }
+
+    public void excuteMagnet(String downloadUrl) {
+        DebugLog.d("TEST", "URL = " + downloadUrl);
+        String downloadPath = PATH + "/download_test";
+        long id = btDownloadManager.enqueueMagnet(downloadUrl,new File(downloadPath));
+        DebugLog.d("TEST", "TASK ID = " + id);
+    }
+
+    public void excuteFtp(String downloadUrl) {
+        DebugLog.d("TEST", "URL = " + downloadUrl);
+        String downloadPath = PATH + "/download_test";
+        long id = btDownloadManager.enqueueFtp(downloadUrl,new File(downloadPath));
+        DebugLog.d("TEST", "TASK ID = " + id);
     }
 
     public void excuteAD(String downloadUrl, String packageName) {
@@ -263,7 +285,7 @@ public class MainActivity extends Activity {
             List<MAGNET> magnetList = magnetDao.queryBuilder().where(MAGNETDao.Properties.ID.eq(id)).build().forCurrentThread().list();
             MAGNET magnet = magnetList.get(0);
             String url = magnet.getURL();
-            excute(url);
+            excuteMagnet(url);
             //将获取到的随机id与数组最后一位交换，作为去重
             int temp = magnetIds[index];
             magnetIds[index] = magnetIds[count];
@@ -315,14 +337,14 @@ public class MainActivity extends Activity {
             List<FTP> ftpList = ftpDao.queryBuilder().where(FTPDao.Properties.ID.eq(id)).build().forCurrentThread().list();
             FTP ftp = ftpList.get(0);
             String url = ftp.getURL();
-            excute(url);
+            excuteFtp(url);
             //将获取到的随机id与数组最后一位交换，作为去重
             int temp = ftpIds[index];
             ftpIds[index] = ftpIds[count];
             ftpIds[count] = temp;
             count--;
         }
-        showToast("执行成功，共插入" + num + "条Https下载任务");
+        showToast("执行成功，共插入" + num + "条Ftp下载任务");
     }
 
     public void insertTestUrl(TESTURLDao testurlDao, int num) {
