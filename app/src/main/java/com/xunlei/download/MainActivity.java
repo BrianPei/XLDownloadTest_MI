@@ -21,6 +21,8 @@ import com.xunlei.download.utils.LogUtil.DebugLog;
 import com.xunlei.download.utils.dao.AD;
 import com.xunlei.download.utils.dao.ADDao;
 import com.xunlei.download.utils.dao.DaoSession;
+import com.xunlei.download.utils.dao.ED2K;
+import com.xunlei.download.utils.dao.ED2KDao;
 import com.xunlei.download.utils.dao.FTP;
 import com.xunlei.download.utils.dao.FTPDao;
 import com.xunlei.download.utils.dao.HTTP;
@@ -49,10 +51,10 @@ public class MainActivity extends Activity {
 
     TextView textView;
     RadioGroup radioGroup;
-    RadioButton radio1, radio2, radio3, radio4, radio5, radio6, radio7;
+    RadioButton radio1, radio2, radio3, radio4, radio5, radio6, radio7, radio8;
     Button button;
 
-    private int[] marketIds, httpIds, magnetIds, httpsIds, ftpIds, testurlIds, adIds;
+    private int[] marketIds, httpIds, magnetIds, httpsIds, ftpIds, testurlIds, adIds, ed2ks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +98,11 @@ public class MainActivity extends Activity {
             adIds[n] = n + 1;
         }
 
+        ed2ks = new int[134];
+        for (int n = 0; n < 134; n++) {
+            ed2ks[n] = n + 1;
+        }
+
         textView = (TextView) findViewById(R.id.Title);
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         radio1 = (RadioButton) findViewById(R.id.radioButton1);
@@ -105,6 +112,7 @@ public class MainActivity extends Activity {
         radio5 = (RadioButton) findViewById(R.id.radioButton5);
         radio6 = (RadioButton) findViewById(R.id.radioButton6);
         radio7 = (RadioButton) findViewById(R.id.radioButton7);
+        radio8 = (RadioButton) findViewById(R.id.radioButton8);
         button = (Button) findViewById(R.id.button);
 
         final DaoSession session = UrlDaoUtils.getDaoSession(this);
@@ -124,6 +132,8 @@ public class MainActivity extends Activity {
                     table = "ftp";
                 } else if (checkedId == radio7.getId()) {
                     table = "ad";
+                } else if (checkedId == radio8.getId()) {
+                    table = "ed2k";
                 } else {
                     table = "testurl";
                 }
@@ -162,6 +172,10 @@ public class MainActivity extends Activity {
                             ADDao adDao = session.getADDao();
                             insertADUrl(adDao, num);
                             break;
+                        case "ed2k":
+                            ED2KDao ed2KDao = session.getED2KDao();
+                            insertEd2kUrl(ed2KDao, num);
+                            break;
                         default:
                             TESTURLDao testurlDao = session.getTESTURLDao();
                             insertTestUrl(testurlDao, num);
@@ -195,14 +209,21 @@ public class MainActivity extends Activity {
     public void excuteMagnet(String downloadUrl) {
         DebugLog.d("TEST", "URL = " + downloadUrl);
         String downloadPath = PATH + "/download_test";
-        long id = btDownloadManager.enqueueMagnet(downloadUrl,new File(downloadPath));
+        long id = btDownloadManager.enqueueMagnet(downloadUrl, new File(downloadPath));
         DebugLog.d("TEST", "TASK ID = " + id);
     }
 
     public void excuteFtp(String downloadUrl) {
         DebugLog.d("TEST", "URL = " + downloadUrl);
         String downloadPath = PATH + "/download_test";
-        long id = btDownloadManager.enqueueFtp(downloadUrl,new File(downloadPath));
+        long id = btDownloadManager.enqueueFtp(downloadUrl, new File(downloadPath));
+        DebugLog.d("TEST", "TASK ID = " + id);
+    }
+
+    public void excuteEd2k(String downloadUrl) {
+        DebugLog.d("TEST", "URL = " + downloadUrl);
+        String downloadPath = PATH + "/download_test";
+        long id = btDownloadManager.enqueueEmule(downloadUrl, new File(downloadPath));
         DebugLog.d("TEST", "TASK ID = " + id);
     }
 
@@ -347,6 +368,32 @@ public class MainActivity extends Activity {
         showToast("执行成功，共插入" + num + "条Ftp下载任务");
     }
 
+    public void insertEd2kUrl(ED2KDao ed2KDao, int num) {
+        int count = ed2ks.length - 1;
+        for (int i = 0; i < num; i++) {
+            int index;
+            //获取随机脚标
+            if (count > 0) {
+                Random random = new Random();
+                index = random.nextInt(count) + 1;
+            } else {
+                index = 0;
+            }
+            int id = ed2ks[index];
+            //获取对应url，添加下载任务
+            List<ED2K> ed2kList = ed2KDao.queryBuilder().where(ED2KDao.Properties.ID.eq(id)).build().forCurrentThread().list();
+            ED2K ed2K = ed2kList.get(0);
+            String url = ed2K.getURL();
+            excuteEd2k(url);
+            //将获取到的随机id与数组最后一位交换，作为去重
+            int temp = ftpIds[index];
+            ftpIds[index] = ftpIds[count];
+            ftpIds[count] = temp;
+            count--;
+        }
+        showToast("执行成功，共插入" + num + "条Test下载任务");
+    }
+
     public void insertTestUrl(TESTURLDao testurlDao, int num) {
         int count = testurlIds.length - 1;
         for (int i = 0; i < num; i++) {
@@ -372,6 +419,7 @@ public class MainActivity extends Activity {
         }
         showToast("执行成功，共插入" + num + "条Test下载任务");
     }
+
 
     public void insertADUrl(ADDao adDao, int num) {
         int count = adIds.length - 1;

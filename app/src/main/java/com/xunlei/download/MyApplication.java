@@ -13,7 +13,7 @@ public class MyApplication extends Application {
     }
 
     @Override
-    public void onTerminate(){
+    public void onTerminate() {
         super.onTerminate();
     }
 }

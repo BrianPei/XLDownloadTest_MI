@@ -51,11 +51,9 @@ public class DebugLog {
     /**
      * Send a verbose log message.
      *
-     * @param tag
-     *            Used to identify the source of a log message. It usually
+     * @param tag Used to identify the source of a log message. It usually
      *            identifies the class or activity where the log call occurs.
-     * @param msg
-     *            The message you would like logged.
+     * @param msg The message you would like logged.
      */
     public static void vv(String tag, String msg) {
         vv(tag, msg, null);
@@ -64,13 +62,10 @@ public class DebugLog {
     /**
      * Send a verbose log message.
      *
-     * @param tag
-     *            Used to identify the source of a log message. It usually
+     * @param tag Used to identify the source of a log message. It usually
      *            identifies the class or activity where the log call occurs.
-     * @param msg
-     *            The message you would like logged.
-     * @param tr
-     *            An exception to log
+     * @param msg The message you would like logged.
+     * @param tr  An exception to log
      */
     public static void vv(String tag, String msg, Throwable tr) {
         if (!LOGVV) {
@@ -86,11 +81,9 @@ public class DebugLog {
     /**
      * Send a verbose log message.
      *
-     * @param tag
-     *            Used to identify the source of a log message. It usually
+     * @param tag Used to identify the source of a log message. It usually
      *            identifies the class or activity where the log call occurs.
-     * @param msg
-     *            The message you would like logged.
+     * @param msg The message you would like logged.
      */
     public static void v(String tag, String msg) {
         v(tag, msg, null);
@@ -99,13 +92,10 @@ public class DebugLog {
     /**
      * Send a verbose log message.
      *
-     * @param tag
-     *            Used to identify the source of a log message. It usually
+     * @param tag Used to identify the source of a log message. It usually
      *            identifies the class or activity where the log call occurs.
-     * @param msg
-     *            The message you would like logged.
-     * @param tr
-     *            An exception to log
+     * @param msg The message you would like logged.
+     * @param tr  An exception to log
      */
     public static void v(String tag, String msg, Throwable tr) {
         if (!LOGV) {
@@ -121,11 +111,9 @@ public class DebugLog {
     /**
      * Send a debug log message.
      *
-     * @param tag
-     *            Used to identify the source of a log message. It usually
+     * @param tag Used to identify the source of a log message. It usually
      *            identifies the class or activity where the log call occurs.
-     * @param msg
-     *            The message you would like logged.
+     * @param msg The message you would like logged.
      */
     public static void d(String tag, String msg) {
         d(tag, msg, null);
@@ -134,13 +122,10 @@ public class DebugLog {
     /**
      * Send a debug log message.
      *
-     * @param tag
-     *            Used to identify the source of a log message. It usually
+     * @param tag Used to identify the source of a log message. It usually
      *            identifies the class or activity where the log call occurs.
-     * @param msg
-     *            The message you would like logged.
-     * @param tr
-     *            An exception to log
+     * @param msg The message you would like logged.
+     * @param tr  An exception to log
      */
     public static void d(String tag, String msg, Throwable tr) {
         if (!LOGD) {
@@ -163,11 +148,9 @@ public class DebugLog {
     /**
      * Send a warning log message.
      *
-     * @param tag
-     *            Used to identify the source of a log message. It usually
+     * @param tag Used to identify the source of a log message. It usually
      *            identifies the class or activity where the log call occurs.
-     * @param msg
-     *            The message you would like logged.
+     * @param msg The message you would like logged.
      */
     public static void w(String tag, String msg) {
         w(tag, msg, null);
@@ -176,13 +159,10 @@ public class DebugLog {
     /**
      * Send a warning log message.
      *
-     * @param tag
-     *            Used to identify the source of a log message. It usually
+     * @param tag Used to identify the source of a log message. It usually
      *            identifies the class or activity where the log call occurs.
-     * @param msg
-     *            The message you would like logged.
-     * @param tr
-     *            An exception to log
+     * @param msg The message you would like logged.
+     * @param tr  An exception to log
      */
     public static void w(String tag, String msg, Throwable tr) {
         if (!LOGW) {
@@ -198,11 +178,9 @@ public class DebugLog {
     /**
      * Send a error log message.
      *
-     * @param tag
-     *            Used to identify the source of a log message. It usually
+     * @param tag Used to identify the source of a log message. It usually
      *            identifies the class or activity where the log call occurs.
-     * @param msg
-     *            The message you would like logged.
+     * @param msg The message you would like logged.
      */
     public static void e(String tag, String msg) {
         e(tag, msg, null);
@@ -211,13 +189,10 @@ public class DebugLog {
     /**
      * Send a error log message.
      *
-     * @param tag
-     *            Used to identify the source of a log message. It usually
+     * @param tag Used to identify the source of a log message. It usually
      *            identifies the class or activity where the log call occurs.
-     * @param msg
-     *            The message you would like logged.
-     * @param tr
-     *            An exception to log
+     * @param msg The message you would like logged.
+     * @param tr  An exception to log
      */
     public static void e(String tag, String msg, Throwable tr) {
         if (!LOGE) {
@@ -233,11 +208,9 @@ public class DebugLog {
     /**
      * Send a release log message.
      *
-     * @param tag
-     *            Used to identify the source of a log message. It usually
+     * @param tag Used to identify the source of a log message. It usually
      *            identifies the class or activity where the log call occurs.
-     * @param msg
-     *            The message you would like logged.
+     * @param msg The message you would like logged.
      */
     public static void r(String tag, String msg) {
         r(tag, msg, null);
@@ -246,13 +219,10 @@ public class DebugLog {
     /**
      * Send a release log message.
      *
-     * @param tag
-     *            Used to identify the source of a log message. It usually
+     * @param tag Used to identify the source of a log message. It usually
      *            identifies the class or activity where the log call occurs.
-     * @param msg
-     *            The message you would like logged.
-     * @param tr
-     *            An exception to log
+     * @param msg The message you would like logged.
+     * @param tr  An exception to log
      */
     public static void r(String tag, String msg, Throwable tr) {
         if (!LOGR) {

@@ -1,8 +1,7 @@
 package com.xunlei.download.test.checklist;
 
-import android.net.Uri;
-
 import android.app.DownloadManager.Request;
+import android.net.Uri;
 
 import com.xunlei.download.test.BaseCase;
 import com.xunlei.download.utils.CaseUtils;
@@ -525,7 +524,7 @@ public class UrlSourceTest extends BaseCase {
         sleep(1);
     }*/
 
-    public void testMarketUpdate1(){
+    public void testMarketUpdate1() {
         printDivideLine();
         //创建下载任务
         String downloadUrl = "http://f3.market.xiaomi.com/download/AppStore/0d1e641e66e5577c744b749dcb6b1b54151421d08/%E5%B0%8F%E7%B1%B3%E5%95%86%E5%9F%8E_3.0.20150520_20150520.apk";

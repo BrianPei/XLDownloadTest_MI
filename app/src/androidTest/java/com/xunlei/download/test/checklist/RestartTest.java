@@ -1,19 +1,11 @@
 package com.xunlei.download.test.checklist;
 
-import android.app.DownloadManager;
 import android.database.Cursor;
-import android.net.Uri;
 
 import com.xunlei.download.test.BaseCase;
 import com.xunlei.download.utils.CaseUtils;
 import com.xunlei.download.utils.LogUtil.DebugLog;
 import com.xunlei.download.utils.StatusEnum;
-import com.xunlei.download.utils.dao.DaoSession;
-import com.xunlei.download.utils.dao.MARKET;
-import com.xunlei.download.utils.dao.MARKETDao;
-import com.xunlei.download.utils.dao.UrlDaoUtils;
-
-import java.util.List;
 
 public class RestartTest extends BaseCase {
 

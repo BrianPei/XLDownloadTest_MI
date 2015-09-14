@@ -1,7 +1,6 @@
 package com.xunlei.download.utils.ExcelUtil;
 
 import android.content.Context;
-import android.os.Environment;
 
 import com.xunlei.download.utils.LogUtil.DebugLog;
 

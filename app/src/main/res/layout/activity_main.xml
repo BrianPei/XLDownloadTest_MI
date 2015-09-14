@@ -70,6 +70,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/radioButton7" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton8"
+            android:layout_weight="1"
+            android:text="Ed2k(134)" />
     </RadioGroup>
 
     <EditText

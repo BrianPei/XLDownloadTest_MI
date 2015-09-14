@@ -86,6 +86,8 @@
     <orderEntry type="library" exported="" name="sqliteassethelper-2.0.1" level="project" />
     <orderEntry type="library" exported="" name="jxl" level="project" />
     <orderEntry type="library" exported="" name="greendao-2.0.0" level="project" />
+    <orderEntry type="library" exported="" name="xldownloadplatform" level="project" />
+    <orderEntry type="library" exported="" name="xldownloadlib" level="project" />
   </component>
 </module>
 

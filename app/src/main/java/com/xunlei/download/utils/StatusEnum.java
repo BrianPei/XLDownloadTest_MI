@@ -11,24 +11,24 @@ public enum StatusEnum {
         this.value = value;
     }
 
-    public static String getName(int value){
-        for(StatusEnum status : StatusEnum.values()){
-            if (status.getValue() == value){
+    public static String getName(int value) {
+        for (StatusEnum status : StatusEnum.values()) {
+            if (status.getValue() == value) {
                 return status.name;
             }
         }
         return null;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public void setValue(int value){
+    public void setValue(int value) {
         this.value = value;
     }
 

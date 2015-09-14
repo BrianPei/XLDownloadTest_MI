@@ -12,7 +12,7 @@ import com.xunlei.download.utils.CaseUtils;
  */
 public class NetworkTest extends BaseCase {
 
-    public void tearDown(){
+    public void tearDown() {
         //删除用例中建立的下载任务
         Cursor cursor = downloadManager.query(new DownloadManager.Query());
         for (int i = 0; i < cursor.getCount(); i++) {
@@ -165,7 +165,7 @@ public class NetworkTest extends BaseCase {
         sleep(1);
     }
 
-    public void test3GtoWifi(){
+    public void test3GtoWifi() {
         printDivideLine();
         //关闭wifi
         setWifi(false);
@@ -194,7 +194,7 @@ public class NetworkTest extends BaseCase {
         sleep(1);
     }
 
-    public void testLimited3GtoWifi(){
+    public void testLimited3GtoWifi() {
         printDivideLine();
         //关闭wifi
         setWifi(false);

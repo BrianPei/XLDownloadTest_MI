@@ -1,11 +1,5 @@
 package com.xunlei.download.utils.BTUtils;
 
-import java.io.File;
-import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-
 import android.app.DownloadManager;
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
@@ -22,6 +16,12 @@ import com.xunlei.downloadlib.XLDownloadManager;
 import com.xunlei.downloadlib.parameter.TorrentFileInfo;
 import com.xunlei.downloadlib.parameter.TorrentInfo;
 import com.xunlei.downloadlib.parameter.XLConstant.XLErrorCode;
+
+import java.io.File;
+import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 public class BTDownloadManager implements BTDownloadCfg {
 
@@ -277,40 +277,40 @@ public class BTDownloadManager implements BTDownloadCfg {
         return torrentInfo;
     }
 
-    public static File verifiedFileLength(File origin){
-        if(origin == null){
+    public static File verifiedFileLength(File origin) {
+        if (origin == null) {
             return null;
         }
         String absolutePath = origin.getAbsolutePath();
         int charSize = calcTheStringCharSize(absolutePath);
         int TOTAL_SIZE = 255;
-        if(charSize < TOTAL_SIZE){
+        if (charSize < TOTAL_SIZE) {
             //绝对字符的长度小于255的话,可以使用原来的
             return origin;
         }
         //按照最后一个反斜杠 把绝对路径分割成两部分,把最后一部分切割
-        int lastIndex = absolutePath.lastIndexOf("/")+1;
-        String firstPath = absolutePath.substring(0,lastIndex);
+        int lastIndex = absolutePath.lastIndexOf("/") + 1;
+        String firstPath = absolutePath.substring(0, lastIndex);
         String lastPath = absolutePath.substring(lastIndex);
 
-        try{
+        try {
             int loopSize = 0;
-            while (true){
+            while (true) {
                 loopSize++;
                 //把最后一部分对半截取
                 int lastPathLength = lastPath.length() / 2;
                 String lastFirst = lastPath.substring(0, lastPathLength);
                 lastPath = lastFirst;
                 String tmpAbsolutePath = firstPath + lastPath;
-                if(calcTheStringCharSize(tmpAbsolutePath) < TOTAL_SIZE){
+                if (calcTheStringCharSize(tmpAbsolutePath) < TOTAL_SIZE) {
                     return new File(tmpAbsolutePath);
                 }
-                if(loopSize > 50){
+                if (loopSize > 50) {
                     //容错处理
                     break;
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -323,12 +323,12 @@ public class BTDownloadManager implements BTDownloadCfg {
         StringBuilder englishChar = new StringBuilder();
         for (int i = 0; i < absolutePath.length(); i++) {
             String chartmp = String.valueOf(absolutePath.charAt(i));
-            if(chartmp.matches("[\\u4e00-\\u9fa5]")){
+            if (chartmp.matches("[\\u4e00-\\u9fa5]")) {
                 chineseChar.append(chartmp);
-            }else {
+            } else {
                 englishChar.append(chartmp);
             }
         }
-        return 2*chineseChar.length() + englishChar.length();
+        return 2 * chineseChar.length() + englishChar.length();
     }
 }
