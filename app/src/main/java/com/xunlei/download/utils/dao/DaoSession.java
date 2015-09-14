@@ -14,6 +14,7 @@ import com.xunlei.download.utils.dao.HTTP;
 import com.xunlei.download.utils.dao.MAGNET;
 import com.xunlei.download.utils.dao.HTTPS;
 import com.xunlei.download.utils.dao.FTP;
+import com.xunlei.download.utils.dao.ED2K;
 import com.xunlei.download.utils.dao.TESTURL;
 import com.xunlei.download.utils.dao.AD;
 
@@ -22,6 +23,7 @@ import com.xunlei.download.utils.dao.HTTPDao;
 import com.xunlei.download.utils.dao.MAGNETDao;
 import com.xunlei.download.utils.dao.HTTPSDao;
 import com.xunlei.download.utils.dao.FTPDao;
+import com.xunlei.download.utils.dao.ED2KDao;
 import com.xunlei.download.utils.dao.TESTURLDao;
 import com.xunlei.download.utils.dao.ADDao;
 
@@ -39,6 +41,7 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig mAGNETDaoConfig;
     private final DaoConfig hTTPSDaoConfig;
     private final DaoConfig fTPDaoConfig;
+    private final DaoConfig eD2KDaoConfig;
     private final DaoConfig tESTURLDaoConfig;
     private final DaoConfig aDDaoConfig;
 
@@ -47,6 +50,7 @@ public class DaoSession extends AbstractDaoSession {
     private final MAGNETDao mAGNETDao;
     private final HTTPSDao hTTPSDao;
     private final FTPDao fTPDao;
+    private final ED2KDao eD2KDao;
     private final TESTURLDao tESTURLDao;
     private final ADDao aDDao;
 
@@ -69,6 +73,9 @@ public class DaoSession extends AbstractDaoSession {
         fTPDaoConfig = daoConfigMap.get(FTPDao.class).clone();
         fTPDaoConfig.initIdentityScope(type);
 
+        eD2KDaoConfig = daoConfigMap.get(ED2KDao.class).clone();
+        eD2KDaoConfig.initIdentityScope(type);
+
         tESTURLDaoConfig = daoConfigMap.get(TESTURLDao.class).clone();
         tESTURLDaoConfig.initIdentityScope(type);
 
@@ -80,6 +87,7 @@ public class DaoSession extends AbstractDaoSession {
         mAGNETDao = new MAGNETDao(mAGNETDaoConfig, this);
         hTTPSDao = new HTTPSDao(hTTPSDaoConfig, this);
         fTPDao = new FTPDao(fTPDaoConfig, this);
+        eD2KDao = new ED2KDao(eD2KDaoConfig, this);
         tESTURLDao = new TESTURLDao(tESTURLDaoConfig, this);
         aDDao = new ADDao(aDDaoConfig, this);
 
@@ -88,6 +96,7 @@ public class DaoSession extends AbstractDaoSession {
         registerDao(MAGNET.class, mAGNETDao);
         registerDao(HTTPS.class, hTTPSDao);
         registerDao(FTP.class, fTPDao);
+        registerDao(ED2K.class, eD2KDao);
         registerDao(TESTURL.class, tESTURLDao);
         registerDao(AD.class, aDDao);
     }
@@ -98,6 +107,7 @@ public class DaoSession extends AbstractDaoSession {
         mAGNETDaoConfig.getIdentityScope().clear();
         hTTPSDaoConfig.getIdentityScope().clear();
         fTPDaoConfig.getIdentityScope().clear();
+        eD2KDaoConfig.getIdentityScope().clear();
         tESTURLDaoConfig.getIdentityScope().clear();
         aDDaoConfig.getIdentityScope().clear();
     }
@@ -120,6 +130,10 @@ public class DaoSession extends AbstractDaoSession {
 
     public FTPDao getFTPDao() {
         return fTPDao;
+    }
+
+    public ED2KDao getED2KDao() {
+        return eD2KDao;
     }
 
     public TESTURLDao getTESTURLDao() {

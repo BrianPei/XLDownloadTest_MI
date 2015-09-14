@@ -13,6 +13,7 @@ import com.xunlei.download.utils.dao.HTTPDao;
 import com.xunlei.download.utils.dao.MAGNETDao;
 import com.xunlei.download.utils.dao.HTTPSDao;
 import com.xunlei.download.utils.dao.FTPDao;
+import com.xunlei.download.utils.dao.ED2KDao;
 import com.xunlei.download.utils.dao.TESTURLDao;
 import com.xunlei.download.utils.dao.ADDao;
 
@@ -30,6 +31,7 @@ public class DaoMaster extends AbstractDaoMaster {
         MAGNETDao.createTable(db, ifNotExists);
         HTTPSDao.createTable(db, ifNotExists);
         FTPDao.createTable(db, ifNotExists);
+        ED2KDao.createTable(db, ifNotExists);
         TESTURLDao.createTable(db, ifNotExists);
         ADDao.createTable(db, ifNotExists);
     }
@@ -41,6 +43,7 @@ public class DaoMaster extends AbstractDaoMaster {
         MAGNETDao.dropTable(db, ifExists);
         HTTPSDao.dropTable(db, ifExists);
         FTPDao.dropTable(db, ifExists);
+        ED2KDao.dropTable(db, ifExists);
         TESTURLDao.dropTable(db, ifExists);
         ADDao.dropTable(db, ifExists);
     }
@@ -79,6 +82,7 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(MAGNETDao.class);
         registerDaoClass(HTTPSDao.class);
         registerDaoClass(FTPDao.class);
+        registerDaoClass(ED2KDao.class);
         registerDaoClass(TESTURLDao.class);
         registerDaoClass(ADDao.class);
     }

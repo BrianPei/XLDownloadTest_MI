@@ -1,6 +1,7 @@
 package com.xunlei.download.utils.BTUtils;
 
 import java.io.File;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -74,6 +75,29 @@ public class BTDownloadManager implements BTDownloadCfg {
         values.put(COLUMN_URI, uri);
 
         values.put(COLUMN_TITLE, title);
+        Uri downloadUri = mResolver.insert(CONTENT_URI,
+                values);
+        long id = Long.parseLong(downloadUri.getLastPathSegment());
+        return id;
+    }
+
+    public long enqueueEmule(String uri, File baseDir) {
+        if (uri == null) {
+            throw new NullPointerException("uri is null");
+        }
+        uri = Uri.decode(uri);
+        if (!uri.startsWith(EMULE_PREFIX)) {
+            throw new IllegalArgumentException("not a ed2k");
+        }
+        String[] split = uri.split("\\|");
+        String fileName = URLDecoder.decode(split[2]);
+        Uri destinationUri = Uri.withAppendedPath(Uri.fromFile(baseDir),
+                fileName);
+        ContentValues values = getCommonValues(destinationUri);
+        values.put(COLUMN_URI, uri);
+
+        values.put(COLUMN_TITLE, fileName);
+        values.put(COLUMN_TOTAL_BYTES, split[3]);
         Uri downloadUri = mResolver.insert(CONTENT_URI,
                 values);
         long id = Long.parseLong(downloadUri.getLastPathSegment());

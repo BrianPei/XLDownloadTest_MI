@@ -81,4 +81,11 @@ public interface BTDownloadCfg {
 
     public static final String MAGNET_PREFIX = "magnet:?xt=urn:btih:";
     public static final String FTP_PREFIX = "ftp:";
+    public static final String EMULE_PREFIX = "ed2k:";
+
+    // 查询索引状态，0初始状态不查询索引，1正在查询索引，2查询到索引信息，3未查询到有效索引信息
+    public static final int QUERY_INDEX_STATUS_INIT = 0;
+    public static final int QUERY_INDEX_STATUS_DOING = 1;
+    public static final int QUERY_INDEX_STATUS_HAVE = 2;
+    public static final int QUERY_INDEX_STATUS_NO = 3;
 }
